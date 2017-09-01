@@ -21,6 +21,8 @@
 */
 
 import Foundation
+import SwiftyJSON
+import Alamofire
 
 struct Definition {
   let title: String
@@ -30,11 +32,50 @@ struct Definition {
 
 class DuckDuckGo {
   
-  enum ResultType: String {
-    case Answer = "A"
-    case Exclusive = "E"    // Exclusive results include special cases like calculations
-  }
-  func performSearch(_ searchTerm: String, completion: ((_ definition: Definition?) -> Void)) {
-    completion(nil)
-  }
+    enum ResultType: String {
+        case Answer = "A"
+        case Exclusive = "E"    // Exclusive results include special cases like calculations
+        func parseDefinitionFromJSON(json: JSON) -> Definition {
+            switch self {
+            case .Answer:
+                let heading = json["Heading"].stringValue
+                let abstract = json["AbstractText"].stringValue
+                let imageURL = URL(string: json["Image"].stringValue)
+                
+                return Definition(title: heading, description: abstract, imageURL: imageURL)
+            case .Exclusive:
+                let answer = json["Answer"].stringValue
+                
+                return Definition(title: "Answer", description: answer, imageURL: nil)
+            }
+        }
+    }
+    
+    func performSearch(_ searchTerm: String, completion: @escaping ((_ definition: Definition?) -> Void)) {
+        let parameters: [String: Any]? = ["q": searchTerm, "format": "json", "pretty": 1, "no_html": 1, "skip_disambig": 1]
+        Alamofire.request("https://api.duckduckgo.com", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).responseJSON { (response:DataResponse<Any>) in
+            
+            switch(response.result) {
+            case .success(_):
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    
+                    // 5
+                    if let jsonType = json["Type"].string, let resultType = ResultType(rawValue: jsonType) {
+                        
+                        // 6
+                        let definition = resultType.parseDefinitionFromJSON(json: json)
+                        completion(definition)
+                    }
+
+                }
+                break
+                
+            case .failure(_):
+                completion(nil)
+                break
+                
+            }
+        }
+    }
 }
