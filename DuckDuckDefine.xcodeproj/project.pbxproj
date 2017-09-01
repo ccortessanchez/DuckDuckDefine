@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AD2EAFA1F59539200B8C586 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AD2EAF81F59539200B8C586 /* Alamofire.framework */; };
+		0AD2EAFB1F59539200B8C586 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AD2EAF91F59539200B8C586 /* SwiftyJSON.framework */; };
 		172EEF1D1B28E2420031C567 /* DuckDuckGo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172EEF1C1B28E2420031C567 /* DuckDuckGo.swift */; };
 		172EEF1F1B296F240031C567 /* RoundedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172EEF1E1B296F240031C567 /* RoundedImageView.swift */; };
 		173CCF261B27508700941412 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173CCF251B27508700941412 /* AppDelegate.swift */; };
@@ -42,6 +44,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0AD2EAF81F59539200B8C586 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		0AD2EAF91F59539200B8C586 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		172EEF1C1B28E2420031C567 /* DuckDuckGo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DuckDuckGo.swift; sourceTree = "<group>"; };
 		172EEF1E1B296F240031C567 /* RoundedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImageView.swift; sourceTree = "<group>"; };
 		173CCF201B27508700941412 /* DuckDuckDefine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckDefine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AD2EAFA1F59539200B8C586 /* Alamofire.framework in Frameworks */,
+				0AD2EAFB1F59539200B8C586 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,12 +81,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AD2EAF71F59539200B8C586 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AD2EAF81F59539200B8C586 /* Alamofire.framework */,
+				0AD2EAF91F59539200B8C586 /* SwiftyJSON.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		173CCF171B27508700941412 = {
 			isa = PBXGroup;
 			children = (
 				173CCF221B27508700941412 /* DuckDuckDefine */,
 				173CCF381B27508700941412 /* DuckDuckDefineTests */,
 				173CCF211B27508700941412 /* Products */,
+				0AD2EAF71F59539200B8C586 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -145,6 +161,7 @@
 				173CCF1D1B27508700941412 /* Frameworks */,
 				173CCF1E1B27508700941412 /* Resources */,
 				17C397E01B275F10002F31CA /* Embed Frameworks */,
+				0AD2EAFC1F59540D00B8C586 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -185,6 +202,7 @@
 				TargetAttributes = {
 					173CCF1F1B27508700941412 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 876L3LH7TJ;
 						LastSwiftMigration = 0830;
 					};
 					173CCF341B27508700941412 = {
@@ -232,6 +250,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0AD2EAFC1F59540D00B8C586 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks";
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		173CCF1C1B27508700941412 /* Sources */ = {
@@ -370,7 +406,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				DEVELOPMENT_TEAM = 876L3LH7TJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DuckDuckDefine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -384,7 +424,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				DEVELOPMENT_TEAM = 876L3LH7TJ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DuckDuckDefine/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
