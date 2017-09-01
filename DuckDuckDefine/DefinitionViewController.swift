@@ -21,25 +21,37 @@
 */
 
 import UIKit
+import Alamofire
 
 class DefinitionViewController: UIViewController {
-  
-  @IBOutlet weak var imageView: RoundedImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var descriptionLabel: UILabel!
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-  
-  var definition: Definition!
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
     
-    title = definition.title
-    descriptionLabel.text = definition.description
-  }
-  
-  override var preferredStatusBarStyle : UIStatusBarStyle {
-    return .lightContent
-  }
-  
+    @IBOutlet weak var imageView: RoundedImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var definition: Definition!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = definition.title
+        descriptionLabel.text = definition.description
+        
+        if let imageURL = definition.imageURL {
+            Alamofire.request(imageURL).response { response in
+                self.activityIndicator.stopAnimating()
+                
+                if let data = response.data,
+                    let image = UIImage(data: data) {
+                    self.imageView.image = image
+                }
+            }
+        }
+    }
+    
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
+    }
+    
 }
